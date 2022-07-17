@@ -1,4 +1,8 @@
 
+import dao.DAO;
+import model.Question;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -16,7 +20,7 @@ public class GameLogic {
         this.points = 0;
     }
 
-    public void gameAnswerValidator(Integer answer)  {
+    public void gameAnswerValidator(Integer answer) throws IOException {
         GameCommanlineInt gameInterface = new GameCommanlineInt();
         //todo data lorem mientra se espera DB
         Integer respuestaCorrecta = 2;
@@ -32,16 +36,10 @@ public class GameLogic {
 
     }
 
-    public static void nextQuestion(Integer round) {
+    public static void nextQuestion(Integer round) throws IOException {
+        DAO myDAO = new DAO();
         GameCommanlineInt gameInterface = new GameCommanlineInt();
-        ArrayList<String> contentQA = new ArrayList<String>();
-        //todo lore, en espera de la base de datos
-        contentQA.add("pregunta lorm");
-        contentQA.add("Lorem 1");
-        contentQA.add("Lorem 2");
-        contentQA.add("Lorem 3");
-        contentQA.add("Lorem 4");
-
+        ArrayList<Question> contentQA = myDAO.readQuestions(round);
         gameInterface.gameInterface(contentQA);
 
     }
