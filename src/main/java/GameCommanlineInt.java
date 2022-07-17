@@ -22,7 +22,7 @@ public class GameCommanlineInt {
                 "\n>");
         Integer respuesta = Integer.valueOf(scan.nextInt());
 
-        if (respuesta == 1){
+        if (respuesta == 1) {
             game.nextQuestion(0);
         } else {
             highScores();
@@ -39,9 +39,10 @@ public class GameCommanlineInt {
         GameLogic game = new GameLogic(round);
         log.info(myQuestion.getText() +
                 "\n1." + answers.get(0).getText() +
-                "\n2." + answers.get(1).getText()  +
-                "\n3." + answers.get(2).getText()  +
-                "\n4." + answers.get(3).getText() );
+                "\n2." + answers.get(1).getText() +
+                "\n3." + answers.get(2).getText() +
+                "\n4." + answers.get(3).getText() +
+                "\n0. Si deseas retirarte");
         Integer respuesta = Integer.valueOf(scan.nextInt());
 
         game.gameAnswerValidator(respuesta, myQuestion);
@@ -59,7 +60,7 @@ public class GameCommanlineInt {
         DAO dao = new DAO();
         ArrayList<Player> players = dao.readPlayers();
 
-        for (int i = 0; i < players.size(); i++){
+        for (int i = 0; i < players.size(); i++) {
             log.info("id: " + players.get(i).getId() + " | Nombre: " + players.get(i).getName() + " | Puntos: " + players.get(i).getScore());
         }
     }

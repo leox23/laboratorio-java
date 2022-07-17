@@ -16,12 +16,13 @@ public class GameLogic {
     private String playerName;
     private Integer points;
 
-    public GameLogic(){
+    public GameLogic() {
         this.round = 0;
         this.playerName = null;
         this.points = 0;
     }
-    public GameLogic(Integer round){
+
+    public GameLogic(Integer round) {
         this.round = round;
         this.playerName = null;
         this.points = 0;
@@ -30,34 +31,43 @@ public class GameLogic {
     public void gameAnswerValidator(Integer answer, Question myQuestion) throws IOException {
         GameCommanlineInt gameInterface = new GameCommanlineInt();
 
-        Integer respuestaCorrecta = myQuestion.getAnswers().get(answer - 1).getIsRight();
-        if (respuestaCorrecta == 1){
-            log.info("Su respuesta es correcta!");
-            this.round++;
-
-            if (this.round == 4){
-                victory();
-            } else {
-                nextQuestion(this.round);
+        if(answer==0){
+            if(this.round == 0){
+                gameInterface.gameInit();
+            }else{
+                victory("Tu puntaje fue de: ");
             }
-        } else {
-            gameInterface.gameOverInterface();
+        }else {
+
+            Integer respuestaCorrecta = myQuestion.getAnswers().get(answer - 1).getIsRight();
+            if (respuestaCorrecta == 1) {
+                log.info("Su respuesta es correcta!");
+
+                this.round++;
+                if (this.round == 4) {
+                    victory("Has respondido todas las preguntas! tu puntaje es: ");
+                } else {
+                    nextQuestion(this.round);
+                }
+            } else {
+                gameInterface.gameOverInterface();
+            }
         }
     }
 
-    private void victory() {
-        DAO dao =  new DAO();
+    private void victory(String message) {
+        DAO dao = new DAO();
         GameCommanlineInt game = new GameCommanlineInt();
         Player playerObj;
         Scanner scan = new Scanner(System.in);
 
         Integer playerPoints = getFinalPoints(this.round);
-        log.info("Has respondido todas las preguntas! tu puntaje es: " + playerPoints.toString() + "pts");
+        log.info(message + playerPoints.toString() + "pts");
         log.info("Denos su nombre para registrar su puntaje:" +
                 ">");
         playerName = scan.nextLine();
 
-        playerObj = new Player(this.round, playerName, playerPoints);
+        playerObj = new Player(playerName, playerPoints);
 
         dao.createPlayer(playerObj);
 
@@ -66,7 +76,7 @@ public class GameLogic {
     }
 
     private Integer getFinalPoints(Integer round) {
-        return Integer.valueOf((int) Math.pow(100,round));
+        return Integer.valueOf((int) Math.pow(100, round));
     }
 
     public static void nextQuestion(Integer round) throws IOException {

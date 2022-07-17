@@ -14,6 +14,7 @@ public class Answer {
     public String getText() {
         return text;
     }
+
     public Integer getIsRight() {
         return isRight;
     }

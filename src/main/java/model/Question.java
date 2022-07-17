@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Question {
-    private Integer  id;
+    private Integer id;
     private Integer round;
     private String text;
     private ArrayList<Answer> answers;
