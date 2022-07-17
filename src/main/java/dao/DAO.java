@@ -83,7 +83,6 @@ public class DAO implements Idao {
             ps = this.CONNECTION.prepareStatement(query);
             ps.setInt(1, round + 1);
             rs = ps.executeQuery();
-            log.info("respuesta cruda de query: " + rs);
             while (rs.next()) {
                 Integer id = rs.getInt("id");
                 String text = rs.getString("text");

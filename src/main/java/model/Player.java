@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Clase tipo player, con atributos id, name y score que representa el modelo player de la base de datos
+ */
 public class Player {
     private Integer id;
     private String name;
