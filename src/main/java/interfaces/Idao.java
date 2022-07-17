@@ -7,6 +7,9 @@ import model.Question;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Interface de definicion de los metodos de interaccion con la base de datos.
+ */
 public interface Idao {
     ArrayList<Player> readPlayers() throws IOException;
 

@@ -5,6 +5,9 @@ import dao.DAO;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Clase tipo Question, contiene atributos de id, el round actual, el texto de la pregunta, y el listadeo de respuestas.
+ */
 public class Question {
     private Integer id;
     private Integer round;

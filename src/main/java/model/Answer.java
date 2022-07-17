@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Clase tipo Answer, contiene su id, su contenido, y si es correcta.
+ */
 public class Answer {
     private Integer id;
     private String text;

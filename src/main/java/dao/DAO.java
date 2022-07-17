@@ -14,10 +14,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+/**
+ * Clase que contiene todos los metodos posibles para interactuar con la base de datos.
+ */
 public class DAO implements Idao {
     private static final Connection CONNECTION = DBConnection.getConnection();
     public static final Logger log = Logger.getLogger(String.valueOf(DAO.class));
 
+    /**
+     * Metodo designado a la creacion de nuevo jugador en la lista de puntajes maximos.
+     *
+     * @param player Tipo Player
+     */
     @Override
     public void createPlayer(Player player) {
         String query = "INSERT INTO questionchallenge.player( name, score) VALUES(?,?)";
@@ -31,6 +39,11 @@ public class DAO implements Idao {
         }
     }
 
+    /**
+     * Metodo dedicado a la lectura de todos los jugadores con sus puntajes en la base de datos.
+     *
+     * @return ArrayList<Player> Array de Player
+     */
     @Override
     public ArrayList<Player> readPlayers() {
         PreparedStatement ps;
@@ -54,6 +67,12 @@ public class DAO implements Idao {
         return players;
     }
 
+    /**
+     * Metodo asignado a la lectura de las preguntas pertenecientes al raund que entra el jugador.
+     *
+     * @param round Recibe entero de el round actual del jugador.
+     * @return ArrayList<Question> Devueve la lista de Question, son las preguntas y respuestas del round.
+     */
     @Override
     public ArrayList<Question> readQuestions(Integer round) {
         PreparedStatement ps;
@@ -79,6 +98,12 @@ public class DAO implements Idao {
         return questions;
     }
 
+    /**
+     *  Metodo dedicado a leer las respuestas de la pregunta seleccionada.
+     * @param idQuestion El index de la pregunta seleccionada.
+     * @return ArrayList<Answer> Lista de respuestas.
+     * @throws IOException Error de falla en la lectura.
+     */
     @Override
     public ArrayList<Answer> readAnswers(Integer idQuestion) throws IOException {
         PreparedStatement ps;
