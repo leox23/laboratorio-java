@@ -1,10 +1,11 @@
-import connection.DBConnection;
-
-import java.sql.Connection;
+import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
-        Connection myConnection = DBConnection.getConnection();
+    public static void main(String[] args) throws IOException {
+        GameCommanlineInt game = new GameCommanlineInt();
+        game.gameInit();
     }
+
+
 }
 
