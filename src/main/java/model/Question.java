@@ -18,6 +18,10 @@ public class Question {
         this.answers = new ArrayList<Answer>();
     }
 
+    public Question() {
+
+    }
+
     public void loadAnswer() throws IOException {
         DAO myDAO = new DAO();
         this.answers = myDAO.readAnswers(this.id);
@@ -27,15 +31,7 @@ public class Question {
         return text;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
     public ArrayList<Answer> getAnswers() {
         return answers;
-    }
-
-    public void setAnswers(ArrayList<Answer> answers) {
-        this.answers = answers;
     }
 }

@@ -1,3 +1,6 @@
+import dao.DAO;
+import model.Answer;
+import model.Player;
 import model.Question;
 
 import java.io.IOException;
@@ -26,21 +29,22 @@ public class GameCommanlineInt {
         }
     }
 
-    public static void gameInterface(ArrayList<Question> constentQA) throws IOException {
-        Collections.shuffle(constentQA);
-        Question myQuestion = constentQA.get(0);
+    public static void gameInterface(ArrayList<Question> contentQA, Integer round) throws IOException {
+        Collections.shuffle(contentQA);
+        Question myQuestion = contentQA.get(0);
         myQuestion.loadAnswer();
+        ArrayList<Answer> answers = myQuestion.getAnswers();
+        Collections.shuffle(answers);
         Scanner scan = new Scanner(System.in);
-        GameLogic game = new GameLogic();
+        GameLogic game = new GameLogic(round);
         log.info(myQuestion.getText() +
-                "\n1." + myQuestion.getAnswers().get(0).getText() +
-                "\n2." + myQuestion.getAnswers().get(1).getText()  +
-                "\n3." + myQuestion.getAnswers().get(2).getText()  +
-                "\n4." + myQuestion.getAnswers().get(3).getText() );
+                "\n1." + answers.get(0).getText() +
+                "\n2." + answers.get(1).getText()  +
+                "\n3." + answers.get(2).getText()  +
+                "\n4." + answers.get(3).getText() );
         Integer respuesta = Integer.valueOf(scan.nextInt());
 
-        game.gameAnswerValidator(respuesta);
-
+        game.gameAnswerValidator(respuesta, myQuestion);
     }
 
     public static void gameOverInterface() throws IOException {
@@ -52,6 +56,11 @@ public class GameCommanlineInt {
 
     public static void highScores() {
         log.info("Puntajes maximos!");
-        // todo pendiente lista con resultados
+        DAO dao = new DAO();
+        ArrayList<Player> players = dao.readPlayers();
+
+        for (int i = 0; i < players.size(); i++){
+            log.info("id: " + players.get(i).getId() + " | Nombre: " + players.get(i).getName() + " | Puntos: " + players.get(i).getScore());
+        }
     }
 }
