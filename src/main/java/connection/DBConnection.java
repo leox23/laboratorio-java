@@ -2,6 +2,7 @@ package connection;
 
 import services.Preferences;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -12,16 +13,12 @@ import java.util.logging.Logger;
  * */
 public class DBConnection {
     private static Connection connection = null;
-    public static final Logger log = Logger.getLogger(String.valueOf(DBConnection.class));;
-    private static final Preferences preferences = Preferences.getInstance();
+    public static final Logger log = Logger.getLogger(String.valueOf(DBConnection.class));
 
-/**
- * Autoejecucion al instaciar el metodo getConection() para conecectar con la base de datos.
- * */
     static {
         try {
             Class.forName(Preferences.getKey("DRIVER"));
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | IOException e) {
             log.info("Error en el driver: " + e);
         }
     }
@@ -36,7 +33,7 @@ public class DBConnection {
                     Preferences.getKey("USER"),
                     Preferences.getKey("PASSWORD")
             );
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             log.info("Conexion fallida: " + e);
         }
         return connection;

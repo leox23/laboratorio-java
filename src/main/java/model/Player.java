@@ -4,9 +4,9 @@ package model;
  * Clase tipo player, con atributos id, name y score que representa el modelo player de la base de datos
  */
 public class Player {
-    private Integer id;
-    private String name;
-    private Integer score;
+    private final Integer id;
+    private final String name;
+    private final Integer score;
 
     public Player(Integer id, String name, Integer score) {
         this.id = id;

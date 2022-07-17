@@ -6,6 +6,7 @@ import model.Question;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
@@ -20,17 +21,18 @@ public class GameCommanlineInt {
      * @throws IOException posible error al conectar con la base de datos
      */
     public static void gameInit() throws IOException {
-        GameLogic game = new GameLogic();
         Scanner scan = new Scanner(System.in);
-        log.info("¿Quien quiere ser millonario?" +
-                "\n1. Jugar!" +
-                "\n2. Ver puntajes" +
-                "\nElige una opcion:" +
-                "\n>");
-        Integer respuesta = Integer.valueOf(scan.nextInt());
+        log.info("""
+                ¿Quien quiere ser millonario?
+                1. Jugar!
+                2. Ver puntajes
+                Elige una opcion:
+                >
+                """);
+        Integer respuesta = scan.nextInt();
 
         if (respuesta == 1) {
-            game.nextQuestion(0);
+            GameLogic.nextQuestion(0);
         } else {
             highScores();
         }
@@ -43,21 +45,21 @@ public class GameCommanlineInt {
      * @param round tipo Integer representa la ronda actual
      * @throws IOException posible error al conectar con la base de datos
      */
-    public static void gameInterface(ArrayList<Question> contentQA, Integer round) throws IOException {
+    public static void gameInterface(List<Question> contentQA, Integer round) throws IOException {
         Collections.shuffle(contentQA);
-        Question myQuestion = contentQA.get(0);
-        myQuestion.loadAnswer();
-        ArrayList<Answer> answers = myQuestion.getAnswers();
-        Collections.shuffle(answers);
         Scanner scan = new Scanner(System.in);
         GameLogic game = new GameLogic(round);
+        Question myQuestion = contentQA.get(0);
+        myQuestion.loadAnswer();
+        List<Answer> answers = myQuestion.getAnswers();
+        Collections.shuffle(answers);
         log.info(myQuestion.getText() +
                 "\n1." + answers.get(0).getText() +
                 "\n2." + answers.get(1).getText() +
                 "\n3." + answers.get(2).getText() +
                 "\n4." + answers.get(3).getText() +
                 "\n0. Si deseas retirarte");
-        Integer respuesta = Integer.valueOf(scan.nextInt());
+        Integer respuesta = scan.nextInt();
 
         game.gameAnswerValidator(respuesta, myQuestion);
     }
@@ -77,12 +79,25 @@ public class GameCommanlineInt {
      * Metodo que muestra en pantalla los puntajes de los juegadores alamcenados en la base de datos
      */
     public static void highScores() {
+        Scanner scan = new Scanner(System.in);
         log.info("Puntajes maximos!");
         DAO dao = new DAO();
         ArrayList<Player> players = dao.readPlayers();
 
-        for (int i = 0; i < players.size(); i++) {
-            log.info("id: " + players.get(i).getId() + " | Nombre: " + players.get(i).getName() + " | Puntos: " + players.get(i).getScore());
+        for (Player player : players) {
+            log.info("id: " + player.getId() + " | Nombre: " + player.getName() + " | Puntos: " + player.getScore());
+        }
+        log.info("""
+                Deseas ir al menu principal?
+                1. Si  |  Cualquier otro numero para salir del juego.
+                """);
+        Integer response = Integer.valueOf(scan.nextLine());
+        if(response == 1){
+            try {
+                gameInit();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
