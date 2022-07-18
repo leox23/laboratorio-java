@@ -1,3 +1,4 @@
+package app;
 
 import dao.DAO;
 import model.Player;
