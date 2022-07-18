@@ -2,30 +2,24 @@ package model;
 
 import dao.DAO;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Clase tipo Question, contiene atributos de id, el round actual, el texto de la pregunta, y el listadeo de respuestas.
  */
 public class Question {
-    private Integer id;
-    private Integer round;
-    private String text;
+    private final Integer id;
+    private final String text;
     private ArrayList<Answer> answers;
 
-    public Question(Integer id, Integer round, String text) {
+    public Question(Integer id, String text) {
         this.id = id;
-        this.round = round;
         this.text = text;
-        this.answers = new ArrayList<Answer>();
+        this.answers = new ArrayList<>();
     }
 
-    public Question() {
-
-    }
-
-    public void loadAnswer() throws IOException {
+    public void loadAnswer(){
         DAO myDAO = new DAO();
         this.answers = myDAO.readAnswers(this.id);
     }
@@ -34,7 +28,7 @@ public class Question {
         return text;
     }
 
-    public ArrayList<Answer> getAnswers() {
+    public List<Answer> getAnswers() {
         return answers;
     }
 }
